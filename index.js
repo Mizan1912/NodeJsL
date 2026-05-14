@@ -31,9 +31,12 @@ app.get("/api/users/:id",(req,res)=>{
 app.post("/api/users",(req,res)=>{
      const body=req.body;
      console.log(body);
+     if (!body||!body.email||!body.first_name||!body.country) {
+          return res.status(400).json({message:"Email field is required"})
+     }
      users.push({...body,id:users.length+1})
      fs.writeFile('./node_test.json',JSON.stringify(users),(error,data)=>{
-          return res.json({status:"success",id:users.length})
+          return res.status(201).json({status:"success",id:users.length})
      })
      
      
